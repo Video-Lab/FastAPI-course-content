@@ -1,10 +1,14 @@
 from fastapi import FastAPI, Query, Path, HTTPException, status, Body
 from fastapi.encoders import jsonable_encoder
+from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 from typing import Optional, List, Dict
-
 from starlette.status import HTTP_400_BAD_REQUEST
 from database import cars
+
+templates = Jinja2Templates(directory="templates")
+
 class Car(BaseModel):
     make: Optional[str]
     model: Optional[str]
@@ -15,6 +19,8 @@ class Car(BaseModel):
     sold: Optional[List[str]]
 
 app = FastAPI()
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.get("/")
 def root():
