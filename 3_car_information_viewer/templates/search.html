@@ -1,0 +1,27 @@
+{% include 'header.html' %}
+{% include 'navbar.html' %}
+<style>
+    body {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+</style>
+<div class="container">
+    {% if car %}
+        {% include 'car.html' %}
+    {% else %}
+        <h2>Oops! We couldn't find a car with that ID. Please try again.</h2>
+    {% endif %}
+</div>
+{% include 'footer.html' %}
