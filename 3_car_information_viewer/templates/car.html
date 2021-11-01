@@ -1,0 +1,19 @@
+<div>
+    <h2>{{car["year"]}} {{car["make"]}} {{car["model"]}}</h2>
+
+    <p><strong>Price: {{car["price"]}}$</strong></p>
+    <p><strong>{{car["engine"]}}</strong> engine</p>
+
+    {% if car["autonomous"]%}
+        <p>This car has autonomous functionality.</p>
+    {% else %}
+        <p>This car <strong>does not</strong> have autonomous functionality.</p>
+    {% endif %}
+
+    {% if car["sold"] %}
+        <p>Sold in {{cars["sold"]|join(',')}}</p>
+    {% else %}
+        <p>Not currently available.</p>
+    {% endif %}
+    <p>ID: {{id}}</p>
+</div>
