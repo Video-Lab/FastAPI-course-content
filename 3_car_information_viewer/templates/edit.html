@@ -1,0 +1,58 @@
+{% include 'header.html' %}
+{% include 'navbar.html' %}
+<div class="container" style="margin-top: 1em;">
+    <form action="/cars/{{id}}" method="POST">
+        <div class="mb-3">
+            <label for="make" class="form-label">Make</label>
+            <input type="text" class="form-control" name="make" id="make" value="{{car['make']}}" aria-describedby="makeDesc">
+            <div id="makeDesc" class="form-text">The make of the car.</div>
+        </div>
+        <div class="mb-3">
+            <label for="model" class="form-label">Model</label>
+            <input type="text" class="form-control" name="model" id="model" value="{{car['model']}}" aria-describedby="modelDesc">
+            <div id="modelDesc" class="form-text">The model of the car.</div>
+        </div>
+        <div class="mb-3">
+            <label for="model" class="form-label">Year</label>
+            <input type="text" class="form-control" name="year" id="year" value="{{car['year']}}" aria-describedby="yearDesc">
+            <div id="yearDesc" class="form-text">The year the car was released.</div>
+        </div>
+        <div class="mb-3">
+            <label for="model" class="form-label">Price</label>
+            <input type="text" class="form-control" name="price" id="price" value="{{car['price']}}" aria-describedby="priceDesc">
+            <div id="priceDesc " class="form-text">The price of the car in dollars.</div>
+        </div>
+        <div class="mb-3">
+            <label for="model" class="form-label">Engine</label>
+            <input type="text" class="form-control" name="engine" id="engine" value="{{car['engine']}}" aria-describedby="engineDesc">
+            <div id="engineDesc " class="form-text">The engine of the car (V4, V8, etc.)</div>
+        </div>
+        <div class="mb-3">
+            <label for="autonomous" class="form-label">Is the car autonomous?</label>
+            <select class="form-select" name="autonomous" id="autonomous">
+                {% if car['autonomous'] %}
+                    <option selected value="true">Yes</option>
+                    <option value="false">No</option>
+                {% else %}
+                    <option  value="true">Yes</option>
+                    <option selected value="false">No</option>
+                {% endif %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <p>Where is the car sold?</p>
+            <div class="form-check">
+                {% for ct in [("Africa", "AF"), ("Antarctica", "AN"), ("Asia", "AS"), ("Europe", "EU"), ("North America", "NA"),
+                ("Oceania", "OC"), ("South America", "SA")]%}
+                {% if ct[1] in car['sold']%}
+                    <input class="form-check-input" type="checkbox" value="{{ct[1]}}" name="sold" checked>{{ct[0]}} ({{ct[1]}})<br>
+                {% else %}
+                    <input class="form-check-input" type="checkbox" value="{{ct[1]}}" name="sold">{{ct[0]}} ({{ct[1]}})<br>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% include 'footer.html' %}
