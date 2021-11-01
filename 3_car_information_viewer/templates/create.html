@@ -1,0 +1,52 @@
+{% include 'header.html' %}
+{% include 'navbar.html' %}
+<div class="container" style="margin-top: 1em;">
+    <form action="/cars" method="POST">
+        <div class="mb-3">
+            <label for="make" class="form-label">Make</label>
+            <input type="text" class="form-control" name="make" id="make" aria-describedby="makeDesc">
+            <div id="makeDesc" class="form-text">The make of the car.</div>
+        </div>
+        <div class="mb-3">
+            <label for="model" class="form-label">Model</label>
+            <input type="text" class="form-control" name="model" id="model" aria-describedby="modelDesc">
+            <div id="modelDesc" class="form-text">The model of the car.</div>
+        </div>
+        <div class="mb-3">
+            <label for="model" class="form-label">Year</label>
+            <input type="text" class="form-control" name="year" id="year" aria-describedby="yearDesc">
+            <div id="yearDesc" class="form-text">The year the car was released.</div>
+        </div>
+        <div class="mb-3">
+            <label for="model" class="form-label">Price</label>
+            <input type="text" class="form-control" name="price" id="price" aria-describedby="priceDesc">
+            <div id="priceDesc " class="form-text">The price of the car in dollars.</div>
+        </div>
+        <div class="mb-3">
+            <label for="model" class="form-label">Engine</label>
+            <input type="text" class="form-control" name="engine" id="engine" aria-describedby="engineDesc">
+            <div id="engineDesc " class="form-text">The engine of the car (V4, V8, etc.)</div>
+        </div>
+        <div class="mb-3">
+            <label for="autonomous" class="form-label">Is the car autonomous?</label>
+            <select class="form-select" name="autonomous" id="autonomous">
+                <option selected value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <p>Where is the car sold?</p>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="sold" value="AF">Africa (AF)<br>
+                <input class="form-check-input" type="checkbox" value="AN" name="sold">Antarctica (AN)<br>
+                <input class="form-check-input" type="checkbox" value="AS" name="sold">Asia (AS)<br>
+                <input class="form-check-input" type="checkbox" value="EU" name="sold">Europe (EU)<br>
+                <input class="form-check-input" type="checkbox" value="NA" name="sold">North America (NA)<br>
+                <input class="form-check-input" type="checkbox" value="OC" name="sold">Oceania (OC)<br>
+                <input class="form-check-input" type="checkbox" value="SA" name="sold">South America (SA)<br>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% include 'footer.html' %}
