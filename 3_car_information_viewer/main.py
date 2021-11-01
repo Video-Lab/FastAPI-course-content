@@ -25,7 +25,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.get("/", response_class=HTMLResponse)
 def root(request: Request):
-    return templates.TemplateResponse("home.html", {"request": request, "title": "FastAPI - Home", "text": "Welcome to your first app in FastAPI!"})
+    return templates.TemplateResponse("home.html", {"request": request, "title": "FastAPI - Home"})
 
 @app.get("/cars", response_model=List[Dict[str, Car]])
 def get_cars(number: Optional[str] = Query("10",max_length=3)):
