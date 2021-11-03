@@ -99,3 +99,7 @@ def logout():
     response = RedirectResponse("/")
     manager.set_cookie(response, None)
     return response
+
+@app.get("/register", response_class=HTMLResponse)
+def get_register(request: Request):
+    return templates.TemplateResponse("register.html",{"request": request, "title": "FriendConnect - Register", "invalid": False})
