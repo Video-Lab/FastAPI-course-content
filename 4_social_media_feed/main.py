@@ -28,3 +28,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 @app.get("/", response_class=HTMLResponse)
 def root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request, "title": "FriendConnect - Home"})
+
+@app.get("/login", response_class=HTMLResponse)
+def get_login(request: Request):
+    return templates.TemplateResponse("login.html", {"request": request, "title": "FriendConnect - Login", "invalid": True})
