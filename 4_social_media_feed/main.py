@@ -1,5 +1,6 @@
-from fastapi import FastAPI, Request, Response, Depends, status
+from fastapi import FastAPI, Request, Response, Depends, status, Form
 from fastapi.security import OAuth2PasswordRequestForm
+from fastapi.encoders import jsonable_encoder
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
@@ -48,9 +49,9 @@ class User(BaseModel):
     name: str
     username: str
     email: str
-    birthday: str
-    friends: List[str]
-    notifications: List[Notification]
+    birthday: Optional[str] = ""
+    friends: Optional[List[str]] = []
+    notifications: Optional[List[Notification]] = []
 
 class UserDB(User):
     hashed_password: str
@@ -103,3 +104,21 @@ def logout():
 @app.get("/register", response_class=HTMLResponse)
 def get_register(request: Request):
     return templates.TemplateResponse("register.html",{"request": request, "title": "FriendConnect - Register", "invalid": False})
+
+@app.post("/register")
+def register(request: Request, username: str = Form(...), name: str = Form(...), password: str = Form(...), email: str = Form(...)):
+    hashed_password = get_hashed_password(password)
+    invalid = False
+    for db_username in users.keys():
+        if username == db_username:
+            invalid = True
+        elif users[db_username]["email"] == email:
+            invalid = True
+    
+    if invalid:
+        return templates.TemplateResponse("register.html",{"request": request, "title": "FriendConnect - Register", "invalid": True},status_code=status.HTTP_400_BAD_REQUEST)
+    
+    users[username] = jsonable_encoder(UserDB(username=username,email=email,name=name,hashed_password=hashed_password))
+    response = RedirectResponse("/login",status_code=status.HTTP_302_FOUND)
+    manager.set_cookie(response,None)
+    return response
