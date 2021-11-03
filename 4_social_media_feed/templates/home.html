@@ -9,6 +9,17 @@
             {% if user.birthday %}
                 <p><strong>Birthday: </strong>{{user.birthday}}</p>
             {% endif %}
+
+            {% if user.notifications %}
+                {% for notification in user.notifications%}
+                    <ul style="list-style: none; padding-left: 0;">
+                        <li><strong>{{notification.author}}</strong></li>
+                        <li>{{notification.description}}</li>
+                    </ul>
+                {% endfor %}
+            {% else %}
+                <p>No new notifications.</p>
+            {% endif %}
         </div>
         <div class="col-12 col-md-4" style="border: 1px solid #aaa;">
             <h2>Your Friends:</h2>

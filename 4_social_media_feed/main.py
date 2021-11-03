@@ -69,7 +69,7 @@ def get_login(request: Request):
     return templates.TemplateResponse("login.html", {"request": request, "title": "FriendConnect - Login"})
 
 @app.post("/login")
-def login(request: Request, response: Response, form_data: OAuth2PasswordRequestForm = Depends()):
+def login(request: Request, form_data: OAuth2PasswordRequestForm = Depends()):
     user = authenticate_user(username=form_data.username, password=form_data.password)
     if not user:
         return templates.TemplateResponse("login.html", {"request": request, "title": "FriendConnect - Login", "invalid": True}, status_code=status.HTTP_401_UNAUTHORIZED)
@@ -104,7 +104,7 @@ def logout():
 
 @app.get("/register", response_class=HTMLResponse)
 def get_register(request: Request):
-    return templates.TemplateResponse("register.html",{"request": request, "title": "FriendConnect - Register", "invalid": False})
+    return templates.TemplateResponse("register.html",{"request": request, "title": "FriendConnect - Register"})
 
 @app.post("/register")
 def register(request: Request, username: str = Form(...), name: str = Form(...), password: str = Form(...), email: str = Form(...)):
