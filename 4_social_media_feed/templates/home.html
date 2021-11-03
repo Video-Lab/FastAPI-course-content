@@ -1,0 +1,21 @@
+{% include 'header.html'%}
+{% include 'navbar.html'%}
+
+<div class="container-md" style="margin-top: 1em; width: fit-content; min-width: 40vw;">
+    <div class="row">
+        <div class="col-12 col-md-8">
+            <h1>{{user.name}}</h1>
+            <p>@{{user.username}}</p>
+            {% if user.birthday %}
+                <p><strong>Birthday: </strong>{{user.birthday}}</p>
+            {% endif %}
+        </div>
+        <div class="col-12 col-md-4" style="border: 1px solid #aaa;">
+            <h2>Your Friends:</h2>
+            {% for friend in user.friends %}
+            <p><strong>{{friend}}</strong></p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% include 'footer.html'%}
