@@ -1,0 +1,27 @@
+{% include 'header.html' %}
+{% include 'navbar.html' %}
+<style>
+    .container {
+        margin-top: 1em;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+<div class="container">
+    <form action="/login" method="POST">
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" name="username" required>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password" required>            
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    {% if invalid %}
+        <p style="margin-top: 0.5em; color: #eb4823">Invalid username or password. Please try again.</p>
+    {% endif %}
+</div>
+{% include 'footer.html' %}

@@ -6,6 +6,17 @@ from db import SessionLocal, engine, DBContext
 import models
 from sqlalchemy.orm import Session
 app = FastAPI()
+from fastapi_login import LoginManager
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+SECRET_KEY = os.getenv('SECRET_KEY')
+ACCESS_TOKEN_EXPIRE_MINUTES=60
+
+manager = LoginManager(SECRET_KEY, token_url="/login", use_cookie=True)
+manager.cookie_name = "auth"
+
 templates = Jinja2Templates(directory="templates")
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
@@ -20,3 +31,7 @@ def root(request: Request):
 @app.get("/tasks")
 def get_tasks(db: Session = Depends(get_db)):
     return jsonable_encoder(db.query(models.Task).first())
+
+@app.get("/login")
+def get_login(request: Request):
+    return templates.TemplateResponse("login.html", {"request": request, "title": "Login"})
