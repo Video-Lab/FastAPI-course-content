@@ -40,3 +40,7 @@ def add_task(db: Session, task: schemas.TaskCreate, id: str):
     db.commit() 
     db.refresh(db_task)
     return db_task
+
+def delete_task(db: Session, id: str):
+    db.query(models.Task).filter(models.Task.id == id).delete()
+    db.commit()
