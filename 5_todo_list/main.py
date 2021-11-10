@@ -1,8 +1,9 @@
 from datetime import timedelta
-from fastapi import FastAPI, Request, Depends, status
+from fastapi import FastAPI, Request, Depends, status, Form
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from fastapi.encoders import jsonable_encoder
+from starlette.status import HTTP_400_BAD_REQUEST
 from db import SessionLocal, engine, DBContext
 import models, crud, schemas
 from sqlalchemy.orm import Session
@@ -91,3 +92,25 @@ def login(request: Request, form_data: OAuth2PasswordRequestForm = Depends(), db
 @app.get("/register")
 def get_register(request: Request):
     return templates.TemplateResponse("register.html", {"request": request, "title": "Register"})
+
+@app.post("/register")
+def register(request: Request,
+username: str = Form(...),
+email: str = Form(...),
+name: str = Form(...),
+password: str = Form(...),
+db: Session = Depends(get_db)):
+    hashed_password = get_hashed_password(password)
+    invalid = False
+    if crud.get_user_by_username(db=db,username=username):
+        invalid = True
+    if crud.get_user_by_email(db=db,email=email):
+        invalid = True
+    
+    if not invalid:
+        crud.create_user(db=db, user=schemas.UserCreate(username=username,email=email,name=name,hashed_password=hashed_password))
+        response = RedirectResponse("/login", status_code=status.HTTP_302_FOUND)
+        return response
+    else:
+        return templates.TemplateResponse("register.html",{"request": request, "title": "Register", "invalid": True},
+        status_code=HTTP_400_BAD_REQUEST)
