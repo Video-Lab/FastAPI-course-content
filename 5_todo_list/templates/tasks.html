@@ -1,0 +1,41 @@
+{% include 'header.html' %}
+{% include 'navbar.html' %}
+
+<div class="container" style="text-align: center; margin-top: 1em;">
+    <h1>Welcome, {{user.name}}</h1>
+    <h2>Your tasks:</h2>
+</div>
+
+<div class="container" style="margin-top: 2em; max-width: fit-content;">
+{% for task in tasks %}
+    <div class="row" style="border-bottom: 1px solid #555; margin: 0.5em;">
+        <div class="col-9">
+            <p style="padding-right: 1em;">{{task.text}}</p>
+        </div>
+        <div class="col-3">
+            <a href="/tasks/delete/{{task.id}}" style="text-decoration: none; color: black;">
+                <i class="far fa-check-square" style="display: block; font-size: 1.5em; margin: auto;"></i>
+            </a>
+        </div>
+    </div>
+{% endfor %}
+
+    <div class="row" style="border-bottom: 1px solid #555; margin: 0.5em;">
+        <form action="/tasks" method="POST" style="display: flex; flex-direction: row; padding-left: 0; padding-right: 0; margin: 0.5em; auto;">
+            <div class="col-9">
+                <input class="form-control" type="text" name="text" id="text" placeholder="Add a new task...">
+            </div>
+            <div class="col-3">
+                <button type="submit" style="background: none; border: none;">
+                    <i class="far fa-check-square" style="display: block; font-size: 1.5em; margin: auto;"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% if invalid %}
+<p style="margin-top: 0.5em; color: #eb4d31">Could not add task.</p>
+{% endif %}
+
+{% include 'footer.html' %}
