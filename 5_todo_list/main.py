@@ -87,3 +87,7 @@ def login(request: Request, form_data: OAuth2PasswordRequestForm = Depends(), db
     resp = RedirectResponse("/tasks", status_code=status.HTTP_302_FOUND)
     manager.set_cookie(resp,access_token)
     return resp
+
+@app.get("/register")
+def get_register(request: Request):
+    return templates.TemplateResponse("register.html", {"request": request, "title": "Register"})

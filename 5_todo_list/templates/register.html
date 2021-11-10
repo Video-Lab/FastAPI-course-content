@@ -1,0 +1,36 @@
+{% include 'header.html'%}
+{% include 'navbar.html'%}
+<style>
+    .container {
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1em;
+    }
+</style>
+<div class="container">
+    <form action="/register" method="POST">
+    
+    <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" class="form-control" id="username" name="username">
+    </div>
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" name="email">
+    </div>
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" name="name">
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" name="password">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    {% if invalid %}
+        <p style="margin-top: 0.5em; color: #eb4823">This user is already registered.</p>
+    {% endif %}    
+</div>
+{% include 'footer.html'%}
