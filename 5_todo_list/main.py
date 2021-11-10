@@ -1,5 +1,5 @@
 from datetime import timedelta
-from fastapi import FastAPI, Request, Depends, status, Form
+from fastapi import FastAPI, Request, Depends, status, Form, Response
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from fastapi.encoders import jsonable_encoder
@@ -114,3 +114,9 @@ db: Session = Depends(get_db)):
     else:
         return templates.TemplateResponse("register.html",{"request": request, "title": "Register", "invalid": True},
         status_code=HTTP_400_BAD_REQUEST)
+
+@app.get("/logout")
+def logout(response: Response):
+    response = RedirectResponse("/")
+    manager.set_cookie(response,None)
+    return response
